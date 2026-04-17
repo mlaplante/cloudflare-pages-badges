@@ -28,9 +28,9 @@ To deploy this project:
 1. Add your account ID to the worker config: `npx wrangler secret put CLOUDFLARE_ACCOUNT_ID`.
 1. Add your Cloudflare API token to the worker config: `npx wrangler secret put CLOUDFLARE_API_KEY`.
 1. Use the following URL to get a badge:
-    ```
-    https://img.shields.io/endpoint?url=https://<WORKERS_DEV_URL>/?projectName=<NAME_OF_PAGES_PROJECT>
-    ```
+   ```
+   https://img.shields.io/endpoint?url=https://<WORKERS_DEV_URL>/?projectName=<NAME_OF_PAGES_PROJECT>
+   ```
 
 ### Continuous Deployment (GitHub Actions)
 
@@ -45,7 +45,6 @@ A `.github/workflows/deploy.yml` workflow auto-deploys on push to `main`. Set th
 - `npm test` — run the test suite
 - `npm run lint` / `npm run typecheck` — static checks
 
-
 ## Generating API tokens
 
 You will need to generate a Cloudflare API key in order to use this Worker.
@@ -54,14 +53,15 @@ You will need to generate a Cloudflare API key in order to use this Worker.
 1. Click `Create Token` in the top right.
 1. Scroll down and create a `Custom Token`.
 1. Create the token:
-    - Name the token `Cloudflare Pages Badges`.
-    - Under permissions, set to `Account` -> `Cloudflare Pages` -> `Read`.
-    - Under Account Resources, only select the relevant account under `Include`.
-    - Do not define any IP address filtering, or a TTL.
-    - Click `Continue to summary`. Your response should look something like:
-        ```
-        Cloudflare Pages Badges API token summary
-        This API token will affect the below accounts and zones, along with their respective permissions
+   - Name the token `Cloudflare Pages Badges`.
+   - Under permissions, set to `Account` -> `Cloudflare Pages` -> `Read`.
+   - Under Account Resources, only select the relevant account under `Include`.
+   - Do not define any IP address filtering, or a TTL.
+   - Click `Continue to summary`. Your response should look something like:
 
-        <YOUR_EMAIL>'s Account - Cloudflare Pages:Read
-        ```
+     ```
+     Cloudflare Pages Badges API token summary
+     This API token will affect the below accounts and zones, along with their respective permissions
+
+     <YOUR_EMAIL>'s Account - Cloudflare Pages:Read
+     ```
