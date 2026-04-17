@@ -1,17 +1,18 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
-    "module": "commonjs",
-    "target": "esnext",
-    "lib": ["esnext"],
-    "alwaysStrict": true,
+    "target": "es2022",
+    "module": "es2022",
+    "moduleResolution": "bundler",
+    "lib": ["es2022"],
+    "types": ["@cloudflare/workers-types"],
     "strict": true,
+    "alwaysStrict": true,
     "preserveConstEnums": true,
-    "moduleResolution": "node",
-    "sourceMap": true,
     "esModuleInterop": true,
-    "types": ["@cloudflare/workers-types"]
+    "isolatedModules": true,
+    "noEmit": true,
+    "skipLibCheck": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "test"]
+  "include": ["src", "test"],
+  "exclude": ["node_modules", "dist"]
 }

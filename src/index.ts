@@ -1,5 +1,12 @@
 import { handleRequest } from "./handler";
 
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event));
-});
+export interface Env {
+  CLOUDFLARE_ACCOUNT_ID: string;
+  CLOUDFLARE_API_KEY: string;
+}
+
+export default {
+  fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    return handleRequest(request, env, ctx);
+  },
+};

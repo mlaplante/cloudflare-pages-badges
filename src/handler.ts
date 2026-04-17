@@ -1,15 +1,20 @@
+import type { Env } from "./index";
 import { getProject } from "./service";
 import { createResponse } from "./shield";
 
-export async function handleRequest(event: FetchEvent): Promise<Response> {
-  const { searchParams } = new URL(event.request.url);
+export async function handleRequest(
+  request: Request,
+  env: Env,
+  ctx: ExecutionContext,
+): Promise<Response> {
+  const { searchParams } = new URL(request.url);
   const projectName = searchParams.get("projectName");
   if (!projectName) {
     return new Response("No project defined.", { status: 400 });
   }
 
   try {
-    const project = await getProject(event, projectName);
+    const project = await getProject(env, ctx, projectName);
     if (!project) {
       return new Response("Project not found.", { status: 400 });
     }

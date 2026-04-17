@@ -1,7 +1,5 @@
 dist
 node_modules
-transpiled
+.wrangler
+.dev.vars
 /.idea/
-
-# Use yarn
-package-lock.json

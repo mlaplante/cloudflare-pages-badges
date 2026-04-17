@@ -21,17 +21,29 @@ You must add the following secrets to your Workers runtime in order for the Work
 
 To deploy this project:
 
-1. Clone this git repo
-1. Install [wrangler2](https://developers.cloudflare.com/workers/wrangler/get-started/).
-1. Run `wrangler publish`
+1. Clone this git repo and run `npm install`.
+1. Run `npx wrangler deploy`.
 1. Take note of the `workers.dev` URL you are given.
 1. Go to the Cloudflare Dashboard, get your account ID and an [API token](#generating-api-tokens).
-1. Add your account ID to the worker config: `wrangler secret put CLOUDFLARE_ACCOUNT_ID`.
-1. Add your Cloudflare API token to the worker config: `wrangler secret put CLOUDFLARE_API_KEY`.
+1. Add your account ID to the worker config: `npx wrangler secret put CLOUDFLARE_ACCOUNT_ID`.
+1. Add your Cloudflare API token to the worker config: `npx wrangler secret put CLOUDFLARE_API_KEY`.
 1. Use the following URL to get a badge:
     ```
     https://img.shields.io/endpoint?url=https://<WORKERS_DEV_URL>/?projectName=<NAME_OF_PAGES_PROJECT>
     ```
+
+### Continuous Deployment (GitHub Actions)
+
+A `.github/workflows/deploy.yml` workflow auto-deploys on push to `main`. Set these GitHub Actions secrets on your fork:
+
+- `CLOUDFLARE_API_TOKEN` — a Workers-scoped token (see below)
+- `CLOUDFLARE_ACCOUNT_ID` — your Cloudflare account ID
+
+### Local development
+
+- `npm run dev` — local Worker dev server
+- `npm test` — run the test suite
+- `npm run lint` / `npm run typecheck` — static checks
 
 
 ## Generating API tokens

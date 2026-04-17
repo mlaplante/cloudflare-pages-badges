@@ -1,7 +1,4 @@
 name = "cloudflare-pages-badges"
+main = "src/index.ts"
+compatibility_date = "2025-04-01"
 workers_dev = true
-main = "dist/worker.js"
-compatibility_date = "2022-06-08"
-
-[build]
-command = "yarn && yarn build"

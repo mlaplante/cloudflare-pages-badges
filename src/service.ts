@@ -1,17 +1,5 @@
-import { CloudflareResponse, Project } from "./types";
-
-declare global {
-  const CLOUDFLARE_ACCOUNT_ID: string;
-  const CLOUDFLARE_API_KEY: string;
-}
-
-const request = (url: string) =>
-  fetch(url, {
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${CLOUDFLARE_API_KEY}`,
-    },
-  });
+import type { Env } from "./index";
+import type { CloudflareResponse, Project } from "./types";
 
 const handleResponse = (
   res: Response,
@@ -30,26 +18,29 @@ interface CachedProject {
 const cachedProjects: Record<string, CachedProject> = {};
 
 export async function getProject(
-  event: FetchEvent,
+  env: Env,
+  _ctx: ExecutionContext,
   projectName: string,
 ): Promise<Project | undefined> {
-  if (
-    cachedProjects[projectName]?.cachedAt &&
-    Date.now() - cachedProjects[projectName]?.cachedAt < 60 * 1000
-  ) {
-    // fetched within the last 60s, use cache
-    return cachedProjects[projectName]?.project;
+  const cached = cachedProjects[projectName];
+  if (cached?.cachedAt && Date.now() - cached.cachedAt < 60 * 1000) {
+    return cached.project;
   }
 
   const url = `https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(
-    CLOUDFLARE_ACCOUNT_ID,
+    env.CLOUDFLARE_ACCOUNT_ID,
   )}/pages/projects/${encodeURIComponent(projectName)}`;
-  const resp = await request(url);
+  const resp = await fetch(url, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${env.CLOUDFLARE_API_KEY}`,
+    },
+  });
   const project = (await handleResponse(resp))?.result;
 
   cachedProjects[projectName] = {
     cachedAt: Date.now(),
-    project: project,
+    project,
   };
 
   return project;
